@@ -10,9 +10,10 @@ return [
     | This value is the name of your application. This value is used when the
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
+    |
     */
 
-    'name' => 'Laravel.io',
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -166,17 +167,15 @@ return [
         /*
          * Package Service Providers...
          */
-        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Markdown\MarkdownServiceProvider::class,
-        App\Spam\SpamServiceProvider::class,
-        App\Validation\ValidationServiceProvider::class,
 
     ],
 
@@ -226,13 +225,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
-        /*
-         * Package Aliases...
-         */
-        'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
-        'Form' => Collective\Html\FormFacade::class,
-        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

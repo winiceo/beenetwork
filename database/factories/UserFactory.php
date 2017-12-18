@@ -1,29 +1,25 @@
 <?php
 
-use App\User;
+use Faker\Generator as Faker;
 
-$factory->define(User::class, function (Faker\Generator $faker) {
+/*
+|--------------------------------------------------------------------------
+| Model Factories
+|--------------------------------------------------------------------------
+|
+| This directory should contain each of the model factory definitions for
+| your application. Factories provide a convenient way to generate new
+| model instances for testing / seeding your application's database.
+|
+*/
+
+$factory->define(App\User::class, function (Faker $faker) {
     static $password;
 
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'username' => $faker->userName,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'confirmed' => true,
-        'confirmation_code' => $faker->md5,
-        'github_id' => $faker->numberBetween(10000, 99999),
-        'github_username' => $faker->userName,
-        'ip' => $faker->ipv4,
-        'banned_at' => null,
-        'type' => User::DEFAULT,
-        'bio' => $faker->sentence,
-    ];
-});
-
-$factory->state(User::class, 'passwordless', function () {
-    return [
-        'password' => '',
     ];
 });

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use App\Http\Middleware\RedirectIfAuthenticated;
 
 class ResetPasswordController extends Controller
 {
@@ -26,7 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -35,6 +34,6 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(RedirectIfAuthenticated::class);
+        $this->middleware('guest');
     }
 }

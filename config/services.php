@@ -35,32 +35,4 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
-    'github' => [
-        'client_id' => env('GITHUB_ID'),
-        'client_secret' => env('GITHUB_SECRET'),
-        'redirect' => env('GITHUB_URL'),
-    ],
-
-    'akismet' => [
-        'api_key' => env('AKISMET_API_KEY'),
-    ],
-
-    'intercom' => [
-        'app_id' => env('INTERCOM_APP_ID'),
-        'secret' => env('INTERCOM_SECRET'),
-    ],
-
-    'google' => [
-        'ad_sense' => [
-            'enabled' => env('GOOGLE_AD_SENSE_ENABLED', false),
-            'client' => env('GOOGLE_AD_SENSE_AD_CLIENT'),
-            'unit_footer' => env('GOOGLE_AD_SENSE_UNIT_FOOTER'),
-            'unit_forum_sidebar' => env('GOOGLE_AD_SENSE_UNIT_FORUM_SIDEBAR'),
-        ],
-    ],
-
-    'carbon' => [
-        'code' => env('CARBON_CODE'),
-    ],
-
 ];

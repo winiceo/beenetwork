@@ -3,14 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use App\Jobs\RegisterUser;
-use App\Jobs\SendEmailConfirmation;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Http\Middleware\RedirectIfAuthenticated;
-use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 
 class RegisterController extends Controller
 {
@@ -32,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -41,26 +36,36 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(RedirectIfAuthenticated::class);
+        $this->middleware('guest');
     }
 
     /**
      * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data): ValidatorContract
+    protected function validator(array $data)
     {
-        return Validator::make($data, app(RegisterRequest::class)->rules());
+        return Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\User
      */
-    protected function create(array $data): User
+    protected function create(array $data)
     {
-        $user = $this->dispatchNow(RegisterUser::fromRequest(app(RegisterRequest::class)));
-
-        $this->dispatchNow(new SendEmailConfirmation($user));
-
-        return $user;
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
     }
 }

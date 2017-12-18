@@ -2,14 +2,9 @@
 
 namespace Tests;
 
-use Illuminate\Foundation\Testing\TestCase as IlluminateTestCase;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-abstract class TestCase extends IlluminateTestCase
+abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, CreatesUsers, HttpAssertions;
-
-    protected function dispatch($job)
-    {
-        return $job->handle();
-    }
+    use CreatesApplication;
 }
