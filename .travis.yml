@@ -1,0 +1,39 @@
+language: php
+
+php: 7.1
+
+sudo: false
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - vendor
+
+before_install:
+  - composer self-update
+  - nvm install 8.1.2
+  - npm install -g yarn@0.24.5
+
+before_script:
+  - composer install --prefer-source --no-interaction --dev
+  - yarn install
+  - yarn production
+
+script:
+  - vendor/bin/phpspec run --verbose
+  - vendor/bin/parallel-lint --exclude vendor .
+  - vendor/bin/phpunit --verbose --coverage-clover build/logs/clover.xml
+
+after_script:
+  - vendor/bin/test-reporter
+
+deploy:
+  provider: script
+  script: curl ${ENVOYER_DEPLOYMENT_HOOK}?sha=${TRAVIS_COMMIT}
+  on:
+    branch: master
+
+addons:
+  code_climate:
+    repo_token: $CODE_CLIMATE_TOKEN
